@@ -1,13 +1,17 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Contents</h1>
+<h1>Prodotti</h1>
 
 <table>
   <thead>
+  <!--
+    Inizio a modificare, dopo descrizione: USER ID e poi UTENTE, anche in TD lo aggiugno
+  -->
     <tr>
       <th>Titolo</th>
       <th>Descrizone</th>
-      <th>Price</th>
+      <th>Utente</th>
+      <th>Prezzo</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,10 +21,17 @@
       <tr>
         <td><%= content.titolo %></td>
         <td><%= content.descrizone %></td>
+        <td><%= content.user.name if content.user%></td>
         <td><%= content.price %></td>
-        <td><%= link_to 'Show', content %></td>
-        <td><%= link_to 'Edit', edit_content_path(content) %></td>
-        <td><%= link_to 'Destroy', content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Mostra', content %></td>
+        <!-- (content) = è tra le parentesi solo perchè vogliamo dire di caricare l'ID.
+             Devo modificare gli 'edit & destroy per gli altri utenti che non si vedano,
+             aggiungo ended ruby <% %>'
+        -->
+        <% if content.user == current_user %>
+          <td><%= link_to 'Modifica', edit_content_path(content) %></td>
+          <td><%= link_to 'Cancella', content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -28,4 +39,4 @@
 
 <br>
 
-<%= link_to 'New Content', new_content_path %>
+<%= link_to 'Nuovo contenuto', new_content_path %>
